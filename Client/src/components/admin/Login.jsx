@@ -35,9 +35,9 @@ const Login = () => {
                 </div>
                     <form onSubmit={(e)=>handleSubmit(e)} className='mt-6 w-full sm:max-w-md'>
                         <p>Email</p>
-                        <input onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder='your email id' className='border-b w-full border-gray-200' />
+                        <input onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder='hello@gmail.com' className='border-b w-full border-gray-200' />
                         <p className='mt-7'>Password</p>
-                        <input onChange={e => setPassword(e.target.value)} value={password} type="text" placeholder='your password' className='border-b w-full  border-gray-200 mb-7' />
+                        <input onChange={e => setPassword(e.target.value)} value={password} type="text" placeholder='helloprem' className='border-b w-full  border-gray-200 mb-7' />
                         <button type='submit' className='w-full bg-primary text-white py-2 rounded '>Login</button>
                     </form>
             </div>
