@@ -3,6 +3,7 @@ import imagekit from '../configs/imagekit.js';
 import {Blog} from '../models/blog.models.js';
 import { Comment } from '../models/comment.models.js';
 import main from '../configs/gemini.js';
+import { User } from '../models/user.models.js';
 
 const addBlog = async(req , res )=>{
     try {
@@ -107,13 +108,27 @@ const togglePublish = async (req , res)=>{
     }
 }
 
+const upvoteComment = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const comment = await Comment.findById(id);
+        if(!comment) return res.json({sucess:false, message:'Comment not found'});
+        comment.upvotes = (comment.upvotes || 0) + 1;
+        await comment.save();
+        res.json({sucess:true, upvotes: comment.upvotes});
+    } catch (error) {
+        res.json({sucess:false, message:error.message});
+    }
+}
+
 const addComment = async (req , res)=>{
     try {
-        const {blog , name , content } = req.body;
-        await Comment.create({
-            blog , name , content
+        const {blog , content , parent_id} = req.body;
+        const {user_id , name} = req.user; // set by auth middleware
+        const comment = await Comment.create({
+            blog , name , content , parent_id , user_id
         })
-        res.json({sucess : true , message : "Comment added for review sucessfully"})
+        res.json({sucess : true , comment})
     } catch (error) {
         res.json({sucess : false , message : error.message})
     }
@@ -121,6 +136,7 @@ const addComment = async (req , res)=>{
 
 const getBlogComments = async (req , res)=>{
     try {
+        
         const {blogId} = req.body;
         const comments = await Comment.find({blog:blogId , isApproved:true}).sort({createdAt : -1});
         res.json({sucess : true , comments})
@@ -140,4 +156,4 @@ const generateContent = async(req , res)=> {
 }
 
 
-export {addBlog , getAllBlogs , getBlogById , deleteBlogById , togglePublish , addComment , getBlogComments , getAllDashboardBlogs , generateContent}
+export {addBlog , getAllBlogs , getBlogById , deleteBlogById , togglePublish , addComment , getBlogComments , getAllDashboardBlogs , generateContent, upvoteComment}

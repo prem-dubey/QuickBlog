@@ -13,6 +13,7 @@ export const AppProvider = ({children})=>{
 
     const [token , setToken ] = useState(null);
     const [blog , setBlog ] = useState([]);
+    const [isAdmin , setIsAdmin ] = useState(false);
     const [input , setInput ] = useState('');
 
     const fetchBlogs = async ()=>{
@@ -31,10 +32,12 @@ export const AppProvider = ({children})=>{
             setToken(token);
             axios.defaults.headers.common['Authorization'] = `${token}`;
         }
+        const storedIsAdmin = localStorage.getItem('isAdmin');
+        setIsAdmin(storedIsAdmin === 'true');
     },[])
 
     const value = {
-        axios , navigate , token , setToken , blog , setBlog , input , setInput 
+        axios , navigate , token , setToken , blog , setBlog , input , setInput , isAdmin , setIsAdmin 
     }
 
     return (

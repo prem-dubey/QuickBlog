@@ -11,6 +11,7 @@ const Layout = () => {
 
   const logout = ()=>{
     localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
     axios.defaults.headers.common['Authorization'] = null;
     setToken(null);
     navigate('/');

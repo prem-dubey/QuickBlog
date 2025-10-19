@@ -6,9 +6,22 @@ const commentSchema = new Schema({
         ref : "Blog",
         required : true
     },
+    parent_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Comment",
+        default:null
+    },
+    upvotes :{
+        type:Number,
+        default:0
+    },
+    user_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required : true
+    },
     name : {
         type : String,
-        required : true
     },
     content : {
         type : String,

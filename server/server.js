@@ -14,11 +14,13 @@ app.use(express.json());
 //importing routes 
 import adminRouter from '../server/routes/admin.routes.js'
 import blogRouter from '../server/routes/blog.routes.js';
+import userRouter from '../server/routes/user.routes.js';
 
 
 //routes
 app.use('/api/admin',adminRouter);
 app.use('/api/blog',blogRouter);
+app.use('/api/user',userRouter);
 
 
 
